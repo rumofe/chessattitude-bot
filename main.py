@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
-# Importamos la función del cerebro (classifier.py)
+from flask_cors import CORS  # <--- NUEVO: Importamos la librería
 from classifier import classify_intent
 
-# 1. DEFINICIÓN DE LA APP (Esto es lo que el test estaba buscando y no encontraba)
 app = Flask(__name__)
+CORS(app)  # <--- NUEVO: Esto abre la puerta al navegador (Frontend)
 
 # ==========================================
 # 🟢 ZONA DE EDICIÓN: TUS RESPUESTAS
@@ -14,11 +14,12 @@ BOT_RESPONSES = {
     "FEDERATION": "Para federarte necesitas rellenar el formulario FIDA.",
     "LICHESS": "Entra en lichess.org/signup para crear tu cuenta.",
     "CONTACT": "Escríbenos a contacto@chessattitude.com",
+    "TOURNAMENTS": "Organizamos torneos Blitz todos los viernes a las 19:00. ¡Apúntate en la web!",
     
-    # RESPUESTA HUMAN: Si el usuario saluda o dice algo fuera de contexto
+    # RESPUESTA HUMAN
     "HUMAN": "Hola, soy el bot de Chess Attitude. No soy humano, solo puedo responder dudas sobre PRECIOS, HORARIOS, LICENCIAS o LICHESS.",
     
-    # RESPUESTA ERROR: Si falla la conexión con Google
+    # RESPUESTA ERROR
     "ERROR": "⚠️ Lo siento, tengo un error técnico interno de conexión. Por favor intenta más tarde."
 }
 
@@ -34,10 +35,10 @@ def webhook():
             
         user_message = data.get('message', '')
         
+        # 1. El Cerebro piensa (Gemini)
         intent = classify_intent(user_message)
         
-        # 2. Looking for the answer in the dictionary
-        # If its not, we use human by default
+        # 2. Buscamos la respuesta en el diccionario
         response_text = BOT_RESPONSES.get(intent, BOT_RESPONSES["HUMAN"])
 
         return jsonify({
@@ -53,5 +54,5 @@ def webhook():
         }), 500
 
 if __name__ == '__main__':
-    print("--- ♟️ SERVER RUNNING ♟️ ---")
+    print("--- ♟️ SERVER RUNNING (CORS ENABLED) ♟️ ---")
     app.run(host='0.0.0.0', port=5000, debug=True)
