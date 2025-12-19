@@ -1,21 +1,22 @@
 import os
 import sys
+import time  # <--- Importante para controlar la velocidad
 from dotenv import load_dotenv
-from openai import OpenAI
+import google.generativeai as genai
 
 # 1. Load environment variables
 load_dotenv()
 
 # 2. Securely retrieve the API Key
-api_key = os.getenv("OPENAI_API_KEY")
+api_key = os.getenv("GEMINI_API_KEY")
 if not api_key:
-    print("CRITICAL ERROR: OPENAI_API_KEY not found in .env file.")
+    print("CRITICAL ERROR: GEMINI_API_KEY not found in .env file.")
     sys.exit(1)
 
-# 3. Initialize the OpenAI Client
-client = OpenAI(api_key=api_key)
+# 3. Configure Google Gemini Client
+genai.configure(api_key=api_key)
 
-# Constants for Intents (Avoid Magic Strings)
+# Constants for Intents
 INTENT_PRICING = "PRICING"
 INTENT_SCHEDULE = "SCHEDULE"
 INTENT_FEDERATION = "FEDERATION"
@@ -24,47 +25,51 @@ INTENT_HUMAN = "HUMAN"
 
 def classify_intent(user_message: str) -> str:
     """
-    Analyzes the user's message and returns the Intent Category.
-    Uses GPT-4o-mini for cost-efficiency and speed.
+    Analyzes the user's message using Google Gemini Stable.
     """
     
-    system_prompt = f"""
-    You are a strictly deterministic classifier for a Chess Academy bot.
-    Classify the user input into ONE of these categories:
-    
-    - {INTENT_PRICING}: Questions about cost, price, money, payments.
-    - {INTENT_SCHEDULE}: Questions about time, hours, calendar, thursday/friday.
-    - {INTENT_FEDERATION}: Questions about official licenses, joining the federation.
-    - {INTENT_LICHESS}: Questions about creating accounts, Lichess usage.
-    - {INTENT_HUMAN}: Greetings, complex questions, or anything else.
-    
-    RULES:
-    1. Reply ONLY with the category name (e.g. "{INTENT_PRICING}").
-    2. Do not explain. Do not add punctuation.
-    """
+    generation_config = {
+        "temperature": 0.0,
+        "max_output_tokens": 100, 
+    }
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_message}
-            ],
-            temperature=0.0,  # 0.0 means maximum determinism (No creativity allowed)
-            max_tokens=10
+        # CAMBIO CLAVE: Usamos el alias 'gemini-flash-latest' que vimos en tu lista.
+        # Es la versión estable actual (normalmente la 1.5 optimizada).
+        model = genai.GenerativeModel(
+            model_name="gemini-flash-latest", 
+            generation_config=generation_config,
+            system_instruction=f"""
+            You are a strictly deterministic classifier for a Chess Academy bot.
+            Classify the user input into ONE of these categories:
+            
+            - {INTENT_PRICING}: Questions about cost, price, money, payments.
+            - {INTENT_SCHEDULE}: Questions about time, hours, calendar, thursday/friday.
+            - {INTENT_FEDERATION}: Questions about official licenses, joining the federation.
+            - {INTENT_LICHESS}: Questions about creating accounts, Lichess usage.
+            - {INTENT_HUMAN}: Greetings, complex questions, or anything else.
+            
+            RULES:
+            1. Reply ONLY with the category name (e.g. "{INTENT_PRICING}").
+            2. Do not explain. Do not add punctuation.
+            """
         )
+
+        response = model.generate_content(user_message)
         
-        # Clean up the response
-        detected_intent = response.choices[0].message.content.strip().upper()
+        if not response.parts:
+            return INTENT_HUMAN
+
+        detected_intent = response.text.strip().upper()
         return detected_intent
 
     except Exception as e:
-        print(f"Error classifying message: {e}")
+        print(f"⚠️ Error classifying (Probable Rate Limit): {e}")
         return INTENT_HUMAN
 
-# --- UNIT TEST (This runs only if you execute this file directly) ---
+# --- UNIT TEST ---
 if __name__ == "__main__":
-    print("--- 🤖 STARTING DIAGNOSTIC TEST ---")
+    print("--- 🤖 STARTING GEMINI STABLE TEST (With Rate Limiting) ---")
     
     test_phrases = [
         "Hola buenas tardes",
@@ -77,4 +82,8 @@ if __name__ == "__main__":
     for phrase in test_phrases:
         print(f"User: '{phrase}'")
         intent = classify_intent(phrase)
-        print(f" >> AI Detected: {intent}\n")
+        print(f" >> Gemini Detected: {intent}\n")
+        
+        # 🛑 Rate Limiting: Esperamos 2 segundos entre llamadas
+        # Esto es vital para cuentas gratuitas.
+        time.sleep(2)
