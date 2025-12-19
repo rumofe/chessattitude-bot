@@ -1,8 +1,8 @@
 import os
 import sys
-import time
 from dotenv import load_dotenv
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 # 1. Load environment variables
 load_dotenv()
@@ -13,68 +13,69 @@ if not api_key:
     print("CRITICAL ERROR: GEMINI_API_KEY not found in .env file.")
     sys.exit(1)
 
-# 3. Configure Google Gemini Client
-genai.configure(api_key=api_key)
+# 3. Configure the NEW Google GenAI Client
+client = genai.Client(api_key=api_key)
 
-# Constants for Intents (Standardized categories)
+# Constants for Intents
 INTENT_PRICING = "PRICING"
 INTENT_SCHEDULE = "SCHEDULE"
 INTENT_FEDERATION = "FEDERATION"
 INTENT_LICHESS = "LICHESS"
-INTENT_CONTACT = "CONTACT" # <--- Añadido para seguir tu ejemplo anterior
+INTENT_CONTACT = "CONTACT"
 INTENT_HUMAN = "HUMAN"
-INTENT_ERROR = "ERROR"     # <--- NUEVO: Para fallos técnicos
+INTENT_ERROR = "ERROR"
 
 def classify_intent(user_message: str) -> str:
     """
-    Analyzes the user's message using Google Gemini Stable (Flash Latest).
+    Analyzes the user's message using the modern Google GenAI SDK.
     Returns the detected Intent Category.
     """
     
-    # Configuration
-    generation_config = {
-        "temperature": 0.0,
-        "max_output_tokens": 100, 
-    }
-
     try:
-        model = genai.GenerativeModel(
-            model_name="gemini-flash-latest", 
-            generation_config=generation_config,
-            system_instruction=f"""
-            You are a strictly deterministic classifier for a Chess Academy bot.
-            Classify the user input into ONE of these categories:
+        # 🔴 CAMBIO ESTRATÉGICO: 'gemini-flash-lite-latest'
+        # Este modelo está diseñado para alta concurrencia y tareas rápidas.
+        # Es ideal para un chatbot que recibe muchas consultas simultáneas.
+        response = client.models.generate_content(
+            model="gemini-flash-lite-latest",
+            config=types.GenerateContentConfig(
+                temperature=0.0, # Deterministic
+                max_output_tokens=50 
+            ),
+            contents=f"""
+            You are a classifier. Classify the input into ONE category:
             
-            - {INTENT_PRICING}: Questions about cost, price, money, payments.
-            - {INTENT_SCHEDULE}: Questions about time, hours, calendar, thursday/friday.
-            - {INTENT_FEDERATION}: Questions about official licenses, joining the federation.
-            - {INTENT_LICHESS}: Questions about creating accounts, Lichess usage.
-            - {INTENT_CONTACT}: Questions about email, phone, location.
-            - {INTENT_HUMAN}: Greetings, complex questions, or anything else.
+            - {INTENT_PRICING}: Cost, price, money.
+            - {INTENT_SCHEDULE}: Time, hours, calendar.
+            - {INTENT_FEDERATION}: Licenses, FIDA.
+            - {INTENT_LICHESS}: Accounts, online.
+            - {INTENT_CONTACT}: Email, phone.
+            - {INTENT_HUMAN}: Greetings, random chat, nonsense.
+            
+            Input: "{user_message}"
             
             RULES:
-            1. Reply ONLY with the category name (e.g. "{INTENT_PRICING}").
-            2. Do not explain. Do not add punctuation.
+            1. Output ONLY the category name.
+            2. If uncertain, output {INTENT_HUMAN}.
+            3. Do NOT abbreviate (e.g., write HUMAN, not HUM).
             """
         )
 
-        response = model.generate_content(user_message)
-        
-        # Safety check: Validate that the response contains text
-        if not response.parts:
-            # If Google returns empty, it's a technical error
+        if not response.text:
             return INTENT_ERROR
 
-        detected_intent = response.text.strip().upper()
-        return detected_intent
+        detected = response.text.strip().upper()
+        
+        # 🛡️ Handle AI abbreviations
+        if detected == "HUM":
+            return INTENT_HUMAN
+
+        return detected
 
     except Exception as e:
-        # Fallback to ERROR if API fails or rate limit is exceeded
-        print(f"⚠️ Error classifying (Probable Rate Limit): {e}")
-        return INTENT_ERROR  # <--- CAMBIO: Antes devolvía HUMAN
+        print(f"⚠️ AI Error: {e}")
+        return INTENT_ERROR
 
 # --- UNIT TEST ---
 if __name__ == "__main__":
-    print("--- 🤖 STARTING GEMINI TEST ---")
-    # Test simple
+    print("--- 🤖 DIAGNOSTIC ---")
     print(classify_intent("Hola"))

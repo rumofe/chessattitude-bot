@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify
+# Importamos la función del cerebro (classifier.py)
 from classifier import classify_intent
 
+# 1. DEFINICIÓN DE LA APP (Esto es lo que el test estaba buscando y no encontraba)
 app = Flask(__name__)
 
 # ==========================================
-# 🟢 EDIT ZONE: YOUR RESPONSES
+# 🟢 ZONA DE EDICIÓN: TUS RESPUESTAS
 # ==========================================
 BOT_RESPONSES = {
     "PRICING": "Nuestras tarifas son 30€/mes por 1 clase semanal.",
@@ -13,28 +15,29 @@ BOT_RESPONSES = {
     "LICHESS": "Entra en lichess.org/signup para crear tu cuenta.",
     "CONTACT": "Escríbenos a contacto@chessattitude.com",
     
-    # CASO 1: HUMAN -> El sistema funciona, pero el usuario dice cosas raras o saluda
-    # Aquí es donde dices "No te entiendo" o das la bienvenida.
-    "HUMAN": "Hola, soy el bot de Chess Attitude. No soy humano, así que solo puedo responder dudas sobre PRECIOS, HORARIOS o LICENCIAS.",
+    # RESPUESTA HUMAN: Si el usuario saluda o dice algo fuera de contexto
+    "HUMAN": "Hola, soy el bot de Chess Attitude. No soy humano, solo puedo responder dudas sobre PRECIOS, HORARIOS, LICENCIAS o LICHESS.",
     
-    # CASO 2: ERROR -> El sistema ha fallado (Internet caído, API rota)
-    "ERROR": "⚠️ Lo siento, tengo un error técnico interno. Por favor intenta contactar por email."
+    # RESPUESTA ERROR: Si falla la conexión con Google
+    "ERROR": "⚠️ Lo siento, tengo un error técnico interno de conexión. Por favor intenta más tarde."
 }
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
     """
-    Main webhook entry point.
+    Punto de entrada principal. Recibe el mensaje, piensa y responde.
     """
     try:
         data = request.get_json()
+        if not data:
+            return jsonify({"error": "No data provided"}), 400
+            
         user_message = data.get('message', '')
         
-        # 1. Detect intent
         intent = classify_intent(user_message)
         
-        # 2. Get Response
-        # Busca la respuesta en el diccionario. Si el intent llega raro, usa HUMAN.
+        # 2. Looking for the answer in the dictionary
+        # If its not, we use human by default
         response_text = BOT_RESPONSES.get(intent, BOT_RESPONSES["HUMAN"])
 
         return jsonify({
@@ -43,11 +46,12 @@ def webhook():
         })
 
     except Exception as e:
-        # Error gravísimo del servidor Flask
+        print(f"Server Error: {e}")
         return jsonify({
             "response": BOT_RESPONSES["ERROR"],
             "intent": "CRITICAL_FAILURE"
         }), 500
 
 if __name__ == '__main__':
+    print("--- ♟️ SERVER RUNNING ♟️ ---")
     app.run(host='0.0.0.0', port=5000, debug=True)
