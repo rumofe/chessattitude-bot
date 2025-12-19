@@ -21,7 +21,9 @@ INTENT_PRICING = "PRICING"
 INTENT_SCHEDULE = "SCHEDULE"
 INTENT_FEDERATION = "FEDERATION"
 INTENT_LICHESS = "LICHESS"
+INTENT_CONTACT = "CONTACT" # <--- Añadido para seguir tu ejemplo anterior
 INTENT_HUMAN = "HUMAN"
+INTENT_ERROR = "ERROR"     # <--- NUEVO: Para fallos técnicos
 
 def classify_intent(user_message: str) -> str:
     """
@@ -30,15 +32,12 @@ def classify_intent(user_message: str) -> str:
     """
     
     # Configuration
-    # Temperature 0.0 forces deterministic (non-creative) results.
-    # Max output tokens increased to 100 to avoid cut-off errors.
     generation_config = {
         "temperature": 0.0,
         "max_output_tokens": 100, 
     }
 
     try:
-        # We use 'gemini-flash-latest' for stability and free-tier compatibility.
         model = genai.GenerativeModel(
             model_name="gemini-flash-latest", 
             generation_config=generation_config,
@@ -50,6 +49,7 @@ def classify_intent(user_message: str) -> str:
             - {INTENT_SCHEDULE}: Questions about time, hours, calendar, thursday/friday.
             - {INTENT_FEDERATION}: Questions about official licenses, joining the federation.
             - {INTENT_LICHESS}: Questions about creating accounts, Lichess usage.
+            - {INTENT_CONTACT}: Questions about email, phone, location.
             - {INTENT_HUMAN}: Greetings, complex questions, or anything else.
             
             RULES:
@@ -62,34 +62,19 @@ def classify_intent(user_message: str) -> str:
         
         # Safety check: Validate that the response contains text
         if not response.parts:
-            return INTENT_HUMAN
+            # If Google returns empty, it's a technical error
+            return INTENT_ERROR
 
-        # Normalize response (remove spaces and convert to uppercase)
         detected_intent = response.text.strip().upper()
         return detected_intent
 
     except Exception as e:
-        # Fallback to HUMAN if API fails or rate limit is exceeded
+        # Fallback to ERROR if API fails or rate limit is exceeded
         print(f"⚠️ Error classifying (Probable Rate Limit): {e}")
-        return INTENT_HUMAN
+        return INTENT_ERROR  # <--- CAMBIO: Antes devolvía HUMAN
 
 # --- UNIT TEST ---
 if __name__ == "__main__":
-    print("--- 🤖 STARTING GEMINI STABLE TEST (With Rate Limiting) ---")
-    
-    # Test phrases kept in Spanish to verify the bot understands the target language
-    test_phrases = [
-        "Hola buenas tardes",
-        "Cuanto vale apuntarse?",
-        "A que hora abris los jueves?",
-        "Como me hago la cuenta en lichess?",
-        "Quiero federarme ya"
-    ]
-    
-    for phrase in test_phrases:
-        print(f"User: '{phrase}'")
-        intent = classify_intent(phrase)
-        print(f" >> Gemini Detected: {intent}\n")
-        
-        # Rate Limiting: 2-second pause to respect the Free Tier quota
-        time.sleep(2)
+    print("--- 🤖 STARTING GEMINI TEST ---")
+    # Test simple
+    print(classify_intent("Hola"))
