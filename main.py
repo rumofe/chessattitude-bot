@@ -13,14 +13,14 @@ BOT_RESPONSES = {
     "SCHEDULE": "Abrimos de Lunes a Viernes de 17:00 a 20:00.",
     "FEDERATION": "Para federarte necesitas rellenar el formulario FIDA.",
     "LICHESS": "Entra en lichess.org/signup para crear tu cuenta.",
-    "CONTACT": "Escríbenos a contacto@chessattitude.com",
-    "TOURNAMENTS": "Organizamos torneos Blitz todos los viernes a las 19:00. ¡Apúntate en la web!",
-    
-    # RESPUESTA HUMAN
+    "CONTACT": "Si tienes alguna duda adicional, contáctanos en info@chessattitude.com. Estaremos encantados de ayudarte.",
+    "TOURNAMENTS": "Toda la información sobre nuestros torneos y resultados está disponible en el siguiente enlace: <a href='https://chessattitude.com/torneos-y-cronicas' target='_blank' style='color:#3498db; font-weight:bold;'>Ir a la Web de Torneos</a>",
+    "TRIAL_CLASS": "¡Exacto! La primera clase es totalmente <b>GRATUITA y sin compromiso</b>. ♟️<br>Queremos que pruebes y conozcas a los profes. <br><br> <a href='https://api.whatsapp.com/send?phone=34600000000&text=Hola,%20quiero%20mi%20clase%20gratis' target='_blank' style='background:#27ae60; color:white; padding:10px 15px; text-decoration:none; border-radius:5px; font-weight:bold;'>📅 Reservar Clase Gratis</a>",    # RESPUESTA HUMAN
     "HUMAN": "Hola, soy el bot de Chess Attitude. No soy humano, solo puedo responder dudas sobre PRECIOS, HORARIOS, LICENCIAS o LICHESS.",
     
     # RESPUESTA ERROR
     "ERROR": "⚠️ Lo siento, tengo un error técnico interno de conexión. Por favor intenta más tarde."
+    
 }
 
 @app.route('/webhook', methods=['POST'])

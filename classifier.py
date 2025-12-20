@@ -23,7 +23,9 @@ INTENT_FEDERATION = "FEDERATION"
 INTENT_LICHESS = "LICHESS"
 INTENT_CONTACT = "CONTACT"
 INTENT_HUMAN = "HUMAN"
+INTENT_TOURNAMENTS = "TOURNAMENTS"
 INTENT_ERROR = "ERROR"
+INTENT_TRIAL = "TRIAL_CLASS"
 
 def classify_intent(user_message: str) -> str:
     """
@@ -50,6 +52,8 @@ def classify_intent(user_message: str) -> str:
             - {INTENT_LICHESS}: Accounts, online.
             - {INTENT_CONTACT}: Email, phone.
             - {INTENT_HUMAN}: Greetings, random chat, nonsense.
+            - {INTENT_TOURNAMENTS}: Competitions, blitz, rapid chess, matches, trophies, friday games.
+            - {INTENT_TRIAL}: Free trial, first class free, try out, test class, no commitment.
             
             Input: "{user_message}"
             
