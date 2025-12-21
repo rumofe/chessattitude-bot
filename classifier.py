@@ -27,6 +27,8 @@ INTENT_HUMAN = "HUMAN"
 INTENT_TOURNAMENTS = "TOURNAMENTS"
 INTENT_ERROR = "ERROR"
 INTENT_TRIAL = "TRIAL_CLASS"
+INTENT_MATERIAL = "MATERIAL"
+INTENT_GREETING = "GREETING"
 
 def classify_intent(user_message: str) -> str:
     """
@@ -42,14 +44,17 @@ def classify_intent(user_message: str) -> str:
                 max_output_tokens=50 
             ),
             contents=f"""
-            You are a classifier. Classify the input into ONE category:
+            You are a helpful assistant for a chess school (Chess Attitude).
+            Classify the user's input into exactly one of the following categories:
             
             - {INTENT_PRICING}: Cost, price, money.
             - {INTENT_SCHEDULE}: Time, hours, calendar, days, when, schedule, monday, tuesday, wednesday, thursday, friday.
             - {INTENT_FEDERATION}: Licenses, FIDA.
-            - {INTENT_LICHESS}: Accounts, online.
+            - {INTENT_LICHESS}: Lichess, create account, sign up, register, tutorial, how to create account, username, password.
             - {INTENT_LOCATIONS}: Address, location, map, street, where are you, place, google maps.
+            - {INTENT_GREETING}: Hola, hello, hi, good morning, buenos dias, hey, saludos, tablerito.  <--- AÑADE ESTA LÍNEA
             - {INTENT_CONTACT}: Email, phone.
+            - {INTENT_MATERIAL}: Access class material, password, lichess studies, openings, endings, classic games, strategy, tactics, homework.
             - {INTENT_HUMAN}: Greetings, random chat, nonsense.
             - {INTENT_TOURNAMENTS}: Competitions, blitz, rapid chess, matches, trophies, friday games.
             - {INTENT_TRIAL}: Free trial, first class free, try out, test class, no commitment.
