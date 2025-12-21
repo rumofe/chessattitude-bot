@@ -45,7 +45,7 @@ def classify_intent(user_message: str) -> str:
             You are a classifier. Classify the input into ONE category:
             
             - {INTENT_PRICING}: Cost, price, money.
-            - {INTENT_SCHEDULE}: Time, hours, calendar.
+            - {INTENT_SCHEDULE}: Time, hours, calendar, days, when, schedule, monday, tuesday, wednesday, thursday, friday.
             - {INTENT_FEDERATION}: Licenses, FIDA.
             - {INTENT_LICHESS}: Accounts, online.
             - {INTENT_LOCATIONS}: Address, location, map, street, where are you, place, google maps.

@@ -10,22 +10,24 @@ CORS(app)  # <--- NUEVO: Esto abre la puerta al navegador (Frontend)
 # ==========================================
 BOT_RESPONSES = {
     "PRICING": """
-    💰 <b>Nuestras Tarifas por Sede:</b><br><br>
-    🏫 <b>Benalmádena (Miguel Hernández):</b><br>
-    - Infantil/Inicial: 30€/mes<br>
-    - Adultos: 40€/mes<br>
-    - Matrícula + Camiseta: 15€<br><br>
+    💰 <b>TARIFAS Y CUOTAS:</b><br><br>
     
-    🏫 <b>Fuengirola (Edif. Colores):</b><br>
-    - Inicial: 27€/mes<br>
-    - Intermedio/Avanzado: 35€/mes<br><br>
+    🏫 <b>CEIP Miguel Hernández (Benalmádena):</b><br>
+    - Ajedrez en Infantil (4-7 años): <b>30€ niños</b>.<br>
+    - Inicial/Intermedio: <b>30€ niño</b> | <b>40€ adultos</b>.<br>
+    - <i>Oferta después de septiembre:</i> 30€ mensual y matrícula con camiseta de la escuela 15€.<br><br>
     
-    🏫 <b>Málaga (Miraflores):</b><br>
-    - Inicial: 33€/mes<br>
-    - Avanzado/Adultos: 40€/mes<br><br>
+    🏫 <b>Escuela Municipal de Fuengirola:</b><br>
+    - Inicial: <b>27€</b>.<br>
+    - Intermedio/Avanzado: <b>35€</b>.<br><br>
     
-    🏫 <b>Málaga (El Atabal):</b><br>
-    - Inicial: 30€/mes
+    🏫 <b>Club de Ajedrez Miraflores (Málaga):</b><br>
+    - Inicial/Intermedio: <b>33€</b>.<br>
+    - Avanzado: <b>40€</b>.<br>
+    - Adultos: <b>40€</b>.<br><br>
+    
+    🏫 <b>Colegio El Atabal (Málaga):</b><br>
+    - Inicial/Intermedio: <b>30€</b>.
     """,
     "LOCATIONS": """
     📍 <b>Aquí tienes nuestras ubicaciones:</b><br><br>
@@ -42,7 +44,27 @@ BOT_RESPONSES = {
     ❹ <b>Málaga (El Atabal):</b> <a href='https://www.google.com/maps/search/?api=1&query=Av.+de+Lope+de+Vega,+12,+Málaga' target='_blank'>Av. de Lope de Vega, 12</a><br>
     <i>(Colegio El Atabal)</i>
     """,
-    "SCHEDULE": "Abrimos de Lunes a Viernes de 17:00 a 20:00.",
+    "SCHEDULE": """
+    🕒 <b>Horarios por Sede:</b><br><br>
+    
+    🏫 <b>Benalmádena (Miguel Hernández):</b><br>
+    📅 <i>Jueves</i><br>
+    - Infantil y Niveles: 18:15 a 19:30<br><br>
+    
+    🏫 <b>Fuengirola (Edif. Colores):</b><br>
+    📅 <i>Viernes</i><br>
+    - Inicial: 16:30 a 18:00<br>
+    - Intermedio/Avanzado: 18:00 a 19:30<br><br>
+    
+    🏫 <b>Málaga (Miraflores):</b><br>
+    📅 <i>Lunes y Miércoles</i><br>
+    - Inicial/Intermedio: 18:00 a 19:00<br>
+    - Avanzado: 19:00 a 20:30<br><br>
+    
+    🏫 <b>Málaga (El Atabal):</b><br>
+    📅 <i>Lunes y Miércoles</i><br>
+    - Inicial/Intermedio: 13:45 a 14:45
+    """,
     "FEDERATION": "Para federarte necesitas rellenar el formulario FIDA.",
     "LICHESS": "Entra en lichess.org/signup para crear tu cuenta.",
     "CONTACT": "Si tienes alguna duda adicional, contáctanos en info@chessattitude.com. Estaremos encantados de ayudarte.",
