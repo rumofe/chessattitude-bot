@@ -9,7 +9,39 @@ CORS(app)  # <--- NUEVO: Esto abre la puerta al navegador (Frontend)
 # 🟢 ZONA DE EDICIÓN: TUS RESPUESTAS
 # ==========================================
 BOT_RESPONSES = {
-    "PRICING": "Nuestras tarifas son 30€/mes por 1 clase semanal.",
+    "PRICING": """
+    💰 <b>Nuestras Tarifas por Sede:</b><br><br>
+    🏫 <b>Benalmádena (Miguel Hernández):</b><br>
+    - Infantil/Inicial: 30€/mes<br>
+    - Adultos: 40€/mes<br>
+    - Matrícula + Camiseta: 15€<br><br>
+    
+    🏫 <b>Fuengirola (Edif. Colores):</b><br>
+    - Inicial: 27€/mes<br>
+    - Intermedio/Avanzado: 35€/mes<br><br>
+    
+    🏫 <b>Málaga (Miraflores):</b><br>
+    - Inicial: 33€/mes<br>
+    - Avanzado/Adultos: 40€/mes<br><br>
+    
+    🏫 <b>Málaga (El Atabal):</b><br>
+    - Inicial: 30€/mes
+    """,
+    "LOCATIONS": """
+    📍 <b>Aquí tienes nuestras ubicaciones:</b><br><br>
+    
+    ❶ <b>Benalmádena:</b> <a href='https://www.google.com/maps/search/?api=1&query=Av.+Inmaculada+Concepción,+138,+Benalmádena' target='_blank'>Av. Inmaculada Concepción, 138</a><br>
+    <i>(CEIP Miguel Hernández)</i><br><br>
+    
+    ❷ <b>Fuengirola:</b> <a href='https://www.google.com/maps/search/?api=1&query=Edificio+Colores,+Fuengirola' target='_blank'>Edificio Colores, 1ª Planta</a><br>
+    <i>(Ayto. de Fuengirola)</i><br><br>
+    
+    ❸ <b>Málaga (Miraflores):</b> <a href='https://www.google.com/maps/search/?api=1&query=Calle+Bocanegra,+3,+Málaga' target='_blank'>C. Bocanegra, 3</a><br>
+    <i>(Club de Ajedrez Miraflores)</i><br><br>
+    
+    ❹ <b>Málaga (El Atabal):</b> <a href='https://www.google.com/maps/search/?api=1&query=Av.+de+Lope+de+Vega,+12,+Málaga' target='_blank'>Av. de Lope de Vega, 12</a><br>
+    <i>(Colegio El Atabal)</i>
+    """,
     "SCHEDULE": "Abrimos de Lunes a Viernes de 17:00 a 20:00.",
     "FEDERATION": "Para federarte necesitas rellenar el formulario FIDA.",
     "LICHESS": "Entra en lichess.org/signup para crear tu cuenta.",
@@ -52,7 +84,10 @@ def webhook():
             "response": BOT_RESPONSES["ERROR"],
             "intent": "CRITICAL_FAILURE"
         }), 500
-
+@app.route('/ping', methods=['GET', 'POST'])
+def ping():
+    """Ruta sencilla para que el despertador no de error"""
+    return "¡Estoy despierto!", 200
 if __name__ == '__main__':
     print("--- ♟️ SERVER RUNNING (CORS ENABLED) ♟️ ---")
     app.run(host='0.0.0.0', port=5000, debug=True)

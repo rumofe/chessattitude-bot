@@ -21,6 +21,7 @@ INTENT_PRICING = "PRICING"
 INTENT_SCHEDULE = "SCHEDULE"
 INTENT_FEDERATION = "FEDERATION"
 INTENT_LICHESS = "LICHESS"
+INTENT_LOCATIONS = "LOCATIONS"
 INTENT_CONTACT = "CONTACT"
 INTENT_HUMAN = "HUMAN"
 INTENT_TOURNAMENTS = "TOURNAMENTS"
@@ -34,9 +35,6 @@ def classify_intent(user_message: str) -> str:
     """
     
     try:
-        # 🔴 CAMBIO ESTRATÉGICO: 'gemini-flash-lite-latest'
-        # Este modelo está diseñado para alta concurrencia y tareas rápidas.
-        # Es ideal para un chatbot que recibe muchas consultas simultáneas.
         response = client.models.generate_content(
             model="gemini-flash-lite-latest",
             config=types.GenerateContentConfig(
@@ -50,6 +48,7 @@ def classify_intent(user_message: str) -> str:
             - {INTENT_SCHEDULE}: Time, hours, calendar.
             - {INTENT_FEDERATION}: Licenses, FIDA.
             - {INTENT_LICHESS}: Accounts, online.
+            - {INTENT_LOCATIONS}: Address, location, map, street, where are you, place, google maps.
             - {INTENT_CONTACT}: Email, phone.
             - {INTENT_HUMAN}: Greetings, random chat, nonsense.
             - {INTENT_TOURNAMENTS}: Competitions, blitz, rapid chess, matches, trophies, friday games.
