@@ -108,7 +108,6 @@ BOT_RESPONSES = {
     ¡Sin problema! A veces los humanos se explican mejor que yo. 😅<br><br>
     Puedes contactar directamente en:<br>
     📧 <b>Email:</b> info@chessattitude.com<br><br>
-    O déjame aquí tu mensaje y se lo pasaré al equipo. 📝
     """,
     
     # RESPUESTA ERROR
