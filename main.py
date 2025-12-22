@@ -129,7 +129,7 @@ BOT_RESPONSES = {
     🔴 <b>Directos</b> y torneos.<br><br>
     
     👇 <b>Suscríbete aquí:</b><br>
-    <a href='PON_AQUI_TU_ENLACE_DE_YOUTUBE' target='_blank' style='background:#FF0000; color:white; padding:10px 15px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;'>▶️ Ver Canal de YouTube</a>
+    <a href='https://www.youtube.com/@chessattitude4572' target='_blank' style='background:#FF0000; color:white; padding:10px 15px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;'>▶️ Ver Canal de YouTube</a>
     """,
     "CONTACT": "Si tienes alguna duda adicional, contáctanos en info@chessattitude.com. Estaremos encantados de ayudarte.",
     "TOURNAMENTS": "Toda la información sobre nuestros torneos y resultados está disponible en el siguiente enlace: <a href='https://chessattitude.com/torneos-y-cronicas' target='_blank' style='color:#3498db; font-weight:bold;'>Ir a la Web de Torneos</a>",
