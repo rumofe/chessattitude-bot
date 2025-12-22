@@ -75,7 +75,7 @@ BOT_RESPONSES = {
     
     ¿No tienes cuenta? Pregúntame: <i>"¿Cómo crear cuenta en Lichess?"</i>
     """,
-    "FEDERATE": """
+    "FEDERATION": """
     🏆 <b>Cómo Federarse (Temporada 2026):</b><br>
     ¡Genial! Federarse es necesario para jugar torneos oficiales.<br><br>
     
