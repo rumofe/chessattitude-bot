@@ -75,7 +75,25 @@ BOT_RESPONSES = {
     
     ¿No tienes cuenta? Pregúntame: <i>"¿Cómo crear cuenta en Lichess?"</i>
     """,
-    "FEDERATION": "Para federarte necesitas rellenar el formulario FIDA.",
+    "FEDERATE": """
+    🏆 <b>Cómo Federarse (Temporada 2026):</b><br>
+    ¡Genial! Federarse es necesario para jugar torneos oficiales.<br><br>
+    
+    📋 <b>Precios Oficiales de Licencias:</b><br>
+    - 🧒 <b>Sub-08:</b> 22,00 €<br>
+    - 👦 <b>Sub-18:</b> 38,00 €<br>
+    - 👨 <b>Senior (Adultos):</b> 50,00 €<br>
+    - 🦅 <b>Independiente:</b> 63,00 €<br>
+    - 🎫 <i>Habilitante (solo 1 torneo):</i> 2,00 €<br><br>
+    
+    💳 <b>Datos para el pago:</b><br>
+    Haz una transferencia o ingreso a:<br>
+    <b>IBAN:</b> ES89 0182 3427 5702 0160 2674<br>
+    <b>Titular:</b> Club Ajedrez Miraflores de los Angeles<br>
+    <b>Concepto:</b> "LICENCIA + Nombre y Apellidos del jugador"<br><br>
+    
+    ⚠️ <b>Importante:</b> Una vez pagado, envía el justificante por WhatsApp al director o al email de contacto para tramitarlo.
+    """,
     "LICHESS": """
     ♟️ <b>GUÍA: Cómo crear tu cuenta GRATIS en Lichess</b><br><br>
     

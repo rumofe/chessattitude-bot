@@ -49,7 +49,7 @@ def classify_intent(user_message: str) -> str:
             
             - {INTENT_PRICING}: Cost, price, money.
             - {INTENT_SCHEDULE}: Time, hours, calendar, days, when, schedule, monday, tuesday, wednesday, thursday, friday.
-            - {INTENT_FEDERATION}: Licenses, FIDA.
+            - {INTENT_FEDERATION}: Federation, official license, registration, fees, insurance, sign up, member card, join club.
             - {INTENT_LICHESS}: Lichess, create account, sign up, register, tutorial, how to create account, username, password.
             - {INTENT_LOCATIONS}: Address, location, map, street, where are you, place, google maps.
             - {INTENT_GREETING}: Hola, hello, hi, good morning, buenos dias, hey, saludos, tablerito.  <--- AÑADE ESTA LÍNEA
