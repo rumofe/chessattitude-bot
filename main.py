@@ -112,7 +112,7 @@ BOT_RESPONSES = {
     
     ¡Y listo! Ya puedes jugar y acceder al material de clase. 🎉
 
-    Tutorial en vídeo y como acceder a torneos: <a href='https://www.youtube.com/watch?v=W4_zCjhD5Pc' target='_blank' style='color:#2980b9; font-weight:bold;'>
+    Tutorial en vídeo y como acceder a torneos: <c href='https://www.youtube.com/watch?v=W4_zCjhD5Pc' target='_blank' style='color:#2980b9; font-weight:bold;'></c>
     """,
     "GREETING": """
     ¡Hola! Soy <b>Tablerito</b> ♟️😃<br>
@@ -126,8 +126,13 @@ BOT_RESPONSES = {
     ¡Exacto! La primera clase es totalmente <b>GRATUITA y sin compromiso</b>. ♟️<br>
     Queremos que pruebes y conozcas a los profes antes de decidir. <br><br>
     
-    Pulsa aquí para escribirnos:<br><br>
-    <a href='mailto:info@chessattitude.com?subject=Quiero%20probar%20una%20clase%20gratis' style='background:#27ae60; color:white; padding:10px 15px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;'>📧 Pedir Clase Gratis</a>
+    👇 <b>Para reservar:</b><br>
+    Pulsa el botón o escríbenos un correo:<br><br>
+    
+    <a href="mailto:info@chessattitude.com?subject=Quiero%20probar%20una%20clase%20gratis" style="background:#27ae60; color:white; padding:10px 15px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;">📧 Enviar Correo</a><br><br>
+    
+    <i>Si el botón no te abre el correo, escríbenos a:</i><br>
+    📧 <b>info@chessattitude.com</b>
     """,
     "HUMAN": """
     📞 <b>¿Prefieres hablar con un profe?</b><br><br>
