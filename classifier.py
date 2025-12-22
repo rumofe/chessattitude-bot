@@ -29,6 +29,7 @@ INTENT_ERROR = "ERROR"
 INTENT_TRIAL = "TRIAL_CLASS"
 INTENT_MATERIAL = "MATERIAL"
 INTENT_GREETING = "GREETING"
+INTENT_CHANNEL = "CHANNEL"
 
 def classify_intent(user_message: str) -> str:
     """
@@ -52,7 +53,8 @@ def classify_intent(user_message: str) -> str:
             - {INTENT_FEDERATION}: Federation, official license, registration, fees, insurance, sign up, member card, join club.
             - {INTENT_LICHESS}: Lichess, create account, sign up, register, tutorial, how to create account, username, password.
             - {INTENT_LOCATIONS}: Address, location, map, street, where are you, place, google maps.
-            - {INTENT_GREETING}: Hola, hello, hi, good morning, buenos dias, hey, saludos, tablerito.  <--- AÑADE ESTA LÍNEA
+            - {INTENT_GREETING}: Hola, hello, hi, good morning, buenos dias, hey, saludos, tablerito.
+            - {INTENT_CHANNEL}: Youtube channel, videos, stream, recordings, subscribe, watch games, analysis, content.
             - {INTENT_CONTACT}: Email, phone.
             - {INTENT_MATERIAL}: Access class material, password, lichess studies, openings, endings, classic games, strategy, tactics, homework.
             - {INTENT_HUMAN}: Greetings, random chat, nonsense.
