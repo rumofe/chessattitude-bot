@@ -112,7 +112,7 @@ BOT_RESPONSES = {
     
     ¡Y listo! Ya puedes jugar y acceder al material de clase. 🎉<br><br>
 
-    Tutorial en vídeo y como acceder a torneos en la plataforma: <c href='https://www.youtube.com/watch?v=W4_zCjhD5Pc' target='_blank' style='color:#2980b9; font-weight:bold;'> 🔗Video Tutorial de Sebastián Santaella</c>
+    Tutorial en vídeo y como acceder a torneos en la plataforma: <a href='https://www.youtube.com/watch?v=W4_zCjhD5Pc' target='_blank' style='color:#2980b9; font-weight:bold;'> 🔗Video Tutorial de Sebastián Santaella</a>
     """,
     "GREETING": """
     ¡Hola! Soy <b>Tablerito</b> ♟️😃<br>
