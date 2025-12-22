@@ -4,19 +4,19 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-# 1. Load environment variables
+# 1. Cargar variables
 load_dotenv()
 
-# 2. Securely retrieve the API Key
+# 2. API Key
 api_key = os.getenv("GEMINI_API_KEY")
 if not api_key:
     print("CRITICAL ERROR: GEMINI_API_KEY not found in .env file.")
     sys.exit(1)
 
-# 3. Configure the NEW Google GenAI Client
+# 3. Cliente Nuevo
 client = genai.Client(api_key=api_key)
 
-# Intent Constants
+# Constants
 INTENT_PRICING = "PRICING"
 INTENT_SCHEDULE = "SCHEDULE"
 INTENT_FEDERATION = "FEDERATION"
@@ -33,61 +33,50 @@ INTENT_CHANNEL = "CHANNEL"
 
 def classify_intent(user_message: str) -> str:
     """
-    Analyzes the user's message using the modern Google GenAI SDK.
-    Returns the detected Intent Category.
+    Analiza el mensaje.
+    IMPORTANTE: Ya no tiene try-except para que los errores (como el 429)
+    suban hasta main.py y se puedan gestionar allí.
     """
     
-    try:
-        # --- API CALL USING THE NEW LIBRARY ---
-        response = client.models.generate_content(
-            model='gemini-2.0-flash', # Fast and stable model
-            config=types.GenerateContentConfig(
-                temperature=0.0, # Temperature 0 for deterministic output
-                max_output_tokens=50 
-            ),
-            contents=f"""
-            You are a helpful assistant for a chess school (Chess Attitude).
-            Classify the user's input into exactly one of the following categories:
-            
-            - {INTENT_PRICING}: Cost, price, money.
-            - {INTENT_SCHEDULE}: Time, hours, calendar, days, when, schedule, monday, tuesday, wednesday, thursday, friday.
-            - {INTENT_FEDERATION}: Federation, official license, registration, fees, insurance, sign up, member card, join club.
-            - {INTENT_LICHESS}: Lichess, create account, sign up, register, tutorial, how to create account, username, password.
-            - {INTENT_LOCATIONS}: Address, location, map, street, where are you, place, google maps.
-            - {INTENT_GREETING}: Hola, hello, hi, good morning, buenos dias, hey, saludos, tablerito.
-            - {INTENT_CHANNEL}: Youtube channel, videos, stream, recordings, subscribe, watch games, analysis, content.
-            - {INTENT_CONTACT}: Email, phone.
-            - {INTENT_MATERIAL}: Access class material, password, lichess studies, openings, endings, classic games, strategy, tactics, homework.
-            - {INTENT_HUMAN}: Greetings, random chat, nonsense, human help.
-            - {INTENT_TOURNAMENTS}: Competitions, blitz, rapid chess, matches, trophies, friday games.
-            - {INTENT_TRIAL}: Free trial, first class free, try out, test class, no commitment.
-            
-            Input: "{user_message}"
-            
-            RULES:
-            1. Output ONLY the category name.
-            2. If uncertain, output {INTENT_HUMAN}.
-            3. Do NOT abbreviate.
-            """
-        )
-
-        if not response.text:
-            return INTENT_ERROR
-
-        detected = response.text.strip().upper()
+    # --- LLAMADA DIRECTA (Sin red de seguridad aquí) ---
+    response = client.models.generate_content(
+        model='gemini-2.0-flash', # Asegúrate que este es el modelo que elegiste
+        config=types.GenerateContentConfig(
+            temperature=0.0, 
+            max_output_tokens=50 
+        ),
+        contents=f"""
+        You are a helpful assistant for a chess school (Chess Attitude).
+        Classify the user's input into exactly one of the following categories:
         
-        # 🛡️ Failsafe for AI abbreviations
-        if detected == "HUM":
-            return INTENT_HUMAN
+        - {INTENT_PRICING}: Cost, price, money.
+        - {INTENT_SCHEDULE}: Time, hours, calendar, days, when, schedule.
+        - {INTENT_FEDERATION}: Federation, official license, registration, fees, insurance.
+        - {INTENT_LICHESS}: Lichess, create account, sign up, register.
+        - {INTENT_LOCATIONS}: Address, location, map, street, where are you.
+        - {INTENT_GREETING}: Hola, hello, hi, good morning.
+        - {INTENT_CHANNEL}: Youtube channel, videos, stream, recordings.
+        - {INTENT_CONTACT}: Email, phone.
+        - {INTENT_MATERIAL}: Access class material, password, lichess studies.
+        - {INTENT_HUMAN}: Greetings, random chat, nonsense, human help.
+        - {INTENT_TOURNAMENTS}: Competitions, blitz, rapid chess, trophies.
+        - {INTENT_TRIAL}: Free trial, first class free, try out.
+        
+        Input: "{user_message}"
+        
+        RULES:
+        1. Output ONLY the category name.
+        2. If uncertain, output {INTENT_HUMAN}.
+        3. Do NOT abbreviate.
+        """
+    )
 
-        return detected
+    if not response.text:
+        return INTENT_HUMAN # Si viene vacío, tratamos como humano por defecto
 
-    except Exception as e:
-        print(f"⚠️ AI Error: {e}")
-        return INTENT_ERROR
+    detected = response.text.strip().upper()
+    
+    if detected == "HUM":
+        return INTENT_HUMAN
 
-# --- UNIT TEST ---
-if __name__ == "__main__":
-    print("--- 🤖 DIAGNOSTIC ---")
-    print(f"Test 'Hola': {classify_intent('Hola')}")
-    print(f"Test 'Precio': {classify_intent('Cual es el precio?')}")
+    return detected
