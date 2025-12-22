@@ -92,7 +92,7 @@ BOT_RESPONSES = {
     <b>Titular:</b> Club Ajedrez Miraflores de los Angeles<br>
     <b>Concepto:</b> "LICENCIA + Nombre y Apellidos del jugador"<br><br>
     
-    ⚠️ <b>Importante:</b> Una vez pagado, envía el justificante por WhatsApp al director o al email de contacto para tramitarlo.
+    ⚠️ <b>Importante:</b> Una vez pagado, envía el justificante por WhatsApp al director o al email de contacto para tramitarlo. Les recordamos que la temporada empieza en enero 2026, les recomendamos encarecidamente antes del 20 de enero del 2026.
     """,
     "LICHESS": """
     ♟️ <b>GUÍA: Cómo crear tu cuenta GRATIS en Lichess</b><br><br>
