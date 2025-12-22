@@ -110,9 +110,9 @@ BOT_RESPONSES = {
     4️⃣ <b>Confirma tu correo:</b><br>
     Te llegará un email de Lichess. Ábrelo y pulsa el enlace para activar la cuenta.<br><br>
     
-    ¡Y listo! Ya puedes jugar y acceder al material de clase. 🎉
+    ¡Y listo! Ya puedes jugar y acceder al material de clase. 🎉<br><br>
 
-    Tutorial en vídeo y como acceder a torneos: <c href='https://www.youtube.com/watch?v=W4_zCjhD5Pc' target='_blank' style='color:#2980b9; font-weight:bold;'></c>
+    Tutorial en vídeo y como acceder a torneos en la plataforma: <c href='https://www.youtube.com/watch?v=W4_zCjhD5Pc' target='_blank' style='color:#2980b9; font-weight:bold;'> 🔗Video Tutorial de Sebastián Santaella</c>
     """,
     "GREETING": """
     ¡Hola! Soy <b>Tablerito</b> ♟️😃<br>
