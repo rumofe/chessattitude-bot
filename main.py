@@ -131,8 +131,9 @@ BOT_RESPONSES = {
     
     <a href="mailto:info@chessattitude.com?subject=Quiero%20probar%20una%20clase%20gratis" style="background:#27ae60; color:white; padding:10px 15px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;">📧 Enviar Correo</a><br><br>
     
-    <i>Si el botón no te abre el correo, escríbenos a:</i><br>
+    <i>Si el botón no te abre el correo reserva tu primera clase escribiendonos a:</i><br>
     📧 <b>info@chessattitude.com</b>
+
     """,
     "HUMAN": """
     📞 <b>¿Prefieres hablar con un profe?</b><br><br>
