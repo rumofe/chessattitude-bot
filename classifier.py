@@ -39,7 +39,7 @@ def classify_intent(user_message: str) -> str:
     
     try:
         response = client.models.generate_content(
-            model="gemini-flash-lite-latest",
+            model = genai.GenerativeModel('gemini-1.5-flash'),
             config=types.GenerateContentConfig(
                 temperature=0.0, # Deterministic
                 max_output_tokens=50 

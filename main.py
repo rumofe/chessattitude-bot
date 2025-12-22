@@ -171,6 +171,7 @@ def webhook():
         user_message = data.get('message', '')
         
         # 1. El Cerebro piensa (Gemini)
+        # Si Google da error 429, fallará justo en esta línea 👇
         intent = classify_intent(user_message)
         
         # 2. Buscamos la respuesta en el diccionario
@@ -182,9 +183,21 @@ def webhook():
         })
 
     except Exception as e:
-        print(f"Server Error: {e}")
+        # Aquí capturamos el error
+        error_message = str(e)
+        print(f"⚠️ Error detectado: {error_message}")
+
+        # --- AQUÍ ESTÁ LA MAGIA (DETECCIÓN DE ERROR 429) ---
+        if "429" in error_message:
+            # Si es por límite de cuota, respondemos amablemente con código 200 (OK)
+            return jsonify({
+                "response": "😅 Estoy recibiendo muchas preguntas a la vez y me he mareado un poco. Por favor, pregúntame de nuevo en 30 segundos.",
+                "intent": "OVERLOAD"
+            }), 200
+        
+        # Si es otro error (código roto), damos el mensaje de error técnico
         return jsonify({
-            "response": BOT_RESPONSES["ERROR"],
+            "response": "⚠️ Lo siento, tengo un error técnico interno. Inténtalo más tarde.",
             "intent": "CRITICAL_FAILURE"
         }), 500
 @app.route('/ping', methods=['GET', 'POST'])
