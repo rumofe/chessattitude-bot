@@ -122,7 +122,13 @@ BOT_RESPONSES = {
     """,
     "CONTACT": "Si tienes alguna duda adicional, contáctanos en info@chessattitude.com. Estaremos encantados de ayudarte.",
     "TOURNAMENTS": "Toda la información sobre nuestros torneos y resultados está disponible en el siguiente enlace: <a href='https://chessattitude.com/torneos-y-cronicas' target='_blank' style='color:#3498db; font-weight:bold;'>Ir a la Web de Torneos</a>",
-    "TRIAL_CLASS": "¡Exacto! La primera clase es totalmente <b>GRATUITA y sin compromiso</b>. ♟️<br>Queremos que pruebes y conozcas a los profes. <br><br> <a href='https://api.whatsapp.com/send?phone=34600000000&text=Hola,%20quiero%20mi%20clase%20gratis' target='_blank' style='background:#27ae60; color:white; padding:10px 15px; text-decoration:none; border-radius:5px; font-weight:bold;'>📅 Reservar Clase Gratis</a>",
+    "TRIAL_CLASS": """
+    ¡Exacto! La primera clase es totalmente <b>GRATUITA y sin compromiso</b>. ♟️<br>
+    Queremos que pruebes y conozcas a los profes antes de decidir. <br><br>
+    
+    Pulsa aquí para escribirnos:<br><br>
+    <a href='mailto:info@chessattitude.com?subject=Quiero%20probar%20una%20clase%20gratis' style='background:#27ae60; color:white; padding:10px 15px; text-decoration:none; border-radius:5px; font-weight:bold; display:inline-block;'>📧 Pedir Clase Gratis</a>
+    """,
     "HUMAN": """
     📞 <b>¿Prefieres hablar con un profe?</b><br><br>
     ¡Sin problema! A veces los humanos se explican mejor que yo. 😅<br><br>
