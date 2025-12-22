@@ -16,7 +16,7 @@ if not api_key:
 # 3. Configure the NEW Google GenAI Client
 client = genai.Client(api_key=api_key)
 
-# Constants for Intents
+# Intent Constants
 INTENT_PRICING = "PRICING"
 INTENT_SCHEDULE = "SCHEDULE"
 INTENT_FEDERATION = "FEDERATION"
@@ -38,10 +38,11 @@ def classify_intent(user_message: str) -> str:
     """
     
     try:
+        # --- API CALL USING THE NEW LIBRARY ---
         response = client.models.generate_content(
-            model = genai.GenerativeModel('gemini-1.5-flash'),
+            model='gemini-1.5-flash', # Fast and stable model
             config=types.GenerateContentConfig(
-                temperature=0.0, # Deterministic
+                temperature=0.0, # Temperature 0 for deterministic output
                 max_output_tokens=50 
             ),
             contents=f"""
@@ -57,7 +58,7 @@ def classify_intent(user_message: str) -> str:
             - {INTENT_CHANNEL}: Youtube channel, videos, stream, recordings, subscribe, watch games, analysis, content.
             - {INTENT_CONTACT}: Email, phone.
             - {INTENT_MATERIAL}: Access class material, password, lichess studies, openings, endings, classic games, strategy, tactics, homework.
-            - {INTENT_HUMAN}: Greetings, random chat, nonsense.
+            - {INTENT_HUMAN}: Greetings, random chat, nonsense, human help.
             - {INTENT_TOURNAMENTS}: Competitions, blitz, rapid chess, matches, trophies, friday games.
             - {INTENT_TRIAL}: Free trial, first class free, try out, test class, no commitment.
             
@@ -66,7 +67,7 @@ def classify_intent(user_message: str) -> str:
             RULES:
             1. Output ONLY the category name.
             2. If uncertain, output {INTENT_HUMAN}.
-            3. Do NOT abbreviate (e.g., write HUMAN, not HUM).
+            3. Do NOT abbreviate.
             """
         )
 
@@ -75,7 +76,7 @@ def classify_intent(user_message: str) -> str:
 
         detected = response.text.strip().upper()
         
-        # 🛡️ Handle AI abbreviations
+        # 🛡️ Failsafe for AI abbreviations
         if detected == "HUM":
             return INTENT_HUMAN
 
@@ -88,4 +89,5 @@ def classify_intent(user_message: str) -> str:
 # --- UNIT TEST ---
 if __name__ == "__main__":
     print("--- 🤖 DIAGNOSTIC ---")
-    print(classify_intent("Hola"))
+    print(f"Test 'Hola': {classify_intent('Hola')}")
+    print(f"Test 'Precio': {classify_intent('Cual es el precio?')}")
