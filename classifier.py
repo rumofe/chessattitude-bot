@@ -40,7 +40,7 @@ def classify_intent(user_message: str) -> str:
     try:
         # --- API CALL USING THE NEW LIBRARY ---
         response = client.models.generate_content(
-            model='gemini-1.5-flash', # Fast and stable model
+            model='gemini-2.0-flash', # Fast and stable model
             config=types.GenerateContentConfig(
                 temperature=0.0, # Temperature 0 for deterministic output
                 max_output_tokens=50 
